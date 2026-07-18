@@ -44,7 +44,7 @@ export interface Stats {
 
 @Injectable({ providedIn: 'root' })
 export class HospitalService {
-  private base = 'http://localhost:4500/api';
+  private base = 'https://hospital-management-system-tl11.onrender.com/api';
 
   constructor(private http: HttpClient) {}
 
