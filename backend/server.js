@@ -54,4 +54,8 @@ app.get('/api/stats', async (req, res) => {
   });
 });
 
+app.get('/', (req, res) => {
+  res.send('CareHMS Backend API is running successfully 🚀');
+});
+
 app.listen(PORT, () => console.log(`CareHMS API running on port ${PORT}`));
