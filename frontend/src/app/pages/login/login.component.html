@@ -1,0 +1,45 @@
+<div class="auth-screen">
+  <div class="auth-panel">
+    <div class="auth-brand">
+      <svg class="pulse" viewBox="0 0 120 24" fill="none">
+        <path d="M0 12 H30 L36 2 L44 22 L50 12 H62 L68 4 L74 20 L80 12 H120"
+              stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="auth-brand-name">CareHMS</span>
+    </div>
+
+    <h1>Welcome back</h1>
+    <p class="auth-sub">Sign in to manage patients, doctors and appointments.</p>
+
+    <form (ngSubmit)="submit()">
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" [(ngModel)]="email" placeholder="you@carehms.in" />
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" [(ngModel)]="password" placeholder="••••••••" />
+      </div>
+
+      <div class="auth-error" *ngIf="error">{{ error }}</div>
+
+      <button class="btn-primary" type="submit" [disabled]="loading">
+        {{ loading ? 'Signing in…' : 'Sign In' }}
+      </button>
+    </form>
+
+    <div class="demo-hint">
+      Demo login — <strong>sanal&#64;carehms.in</strong> / <strong>password123</strong>
+    </div>
+
+    <p class="auth-switch">Don't have an account? <a routerLink="/signup">Create one</a></p>
+  </div>
+
+  <div class="auth-side">
+    <div class="side-copy">
+      <span class="eyebrow mono"></span>
+      <h2>Hospital operations,<br>organized in one place.</h2>
+      <p>Patient registration, doctor rosters, and appointment scheduling — all in a single connected system.</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,79 @@
+<section class="form-panel">
+  <div class="form-card">
+    <h2>{{ editingId ? 'Edit Appointment' : 'Schedule Appointment' }}</h2>
+    <span class="form-sub">{{ editingId ? 'Update an existing appointment' : 'Book a patient with an available doctor' }}</span>
+
+    <form (ngSubmit)="submit()">
+      <div class="field">
+        <label for="pname">Patient</label>
+        <select id="pname" name="pname" [(ngModel)]="form.patientName">
+          <option value="" disabled selected>Select patient</option>
+          <option *ngFor="let p of patients" [value]="p.name">{{ p.name }}</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="doc">Doctor</label>
+        <select id="doc" name="doc" [(ngModel)]="form.doctorName" (ngModelChange)="onDoctorChange()">
+          <option value="" disabled selected>Select doctor</option>
+          <option *ngFor="let d of doctors" [value]="d.name">{{ d.name }} — {{ d.specialization }}</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="dept">Department</label>
+        <input id="dept" name="dept" [(ngModel)]="form.department" placeholder="Auto-filled from doctor" readonly />
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="date">Date</label>
+          <input id="date" name="date" type="date" [(ngModel)]="form.date" />
+        </div>
+        <div class="field">
+          <label for="time">Time</label>
+          <input id="time" name="time" type="time" [(ngModel)]="form.time" />
+        </div>
+      </div>
+
+      <button class="btn-primary" type="submit">{{ editingId ? 'Save Changes' : 'Schedule Appointment' }}</button>
+      <button class="btn-secondary" type="button" *ngIf="editingId" (click)="cancelEdit()">Cancel</button>
+      <div class="toast" *ngIf="saved">{{ editingId ? 'Appointment updated successfully.' : 'Appointment scheduled successfully.' }}</div>
+    </form>
+  </div>
+
+  <div class="panel" style="margin-bottom:0;">
+    <div class="panel-head">
+      <h2>Appointment Ledger</h2>
+      <span class="panel-sub mono">{{ appointments.length }} total</span>
+    </div>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Patient</th>
+          <th>Doctor</th>
+          <th>Department</th>
+          <th>Date &amp; Time</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let a of appointments; let i = index">
+          <td class="id-tag">{{ shortId(a._id, i) }}</td>
+          <td>{{ a.patientName }}</td>
+          <td>{{ a.doctorName }}</td>
+          <td>{{ a.department }}</td>
+          <td class="mono">{{ a.date }} · {{ a.time }}</td>
+          <td><span class="badge" [ngClass]="statusClass(a.status)">{{ a.status }}</span></td>
+          <td class="actions-cell">
+            <button class="icon-btn" (click)="startEdit(a)" title="Edit">Edit</button>
+            <button class="icon-btn" *ngIf="a.status === 'Scheduled'" (click)="setStatus(a, 'Completed')" title="Mark completed">Complete</button>
+            <button class="icon-btn danger" (click)="remove(a)" title="Delete">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

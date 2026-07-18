@@ -1,0 +1,53 @@
+<section class="stat-grid" *ngIf="stats">
+  <div class="stat-card">
+    <span class="stat-label mono">Total Patients</span>
+    <span class="stat-value">{{ stats.totalPatients }}</span>
+    <span class="stat-note">{{ stats.admitted }} currently admitted</span>
+  </div>
+  <div class="stat-card">
+    <span class="stat-label mono">Doctors on Staff</span>
+    <span class="stat-value">{{ stats.totalDoctors }}</span>
+    <span class="stat-note">{{ stats.availableDoctors }} available now</span>
+  </div>
+  <div class="stat-card accent">
+    <span class="stat-label mono">Scheduled Appointments</span>
+    <span class="stat-value">{{ stats.scheduledAppointments }}</span>
+    <span class="stat-note">across all departments</span>
+  </div>
+  <div class="stat-card">
+    <span class="stat-label mono">Completed Visits</span>
+    <span class="stat-value">{{ stats.completedAppointments }}</span>
+    <span class="stat-note">this cycle</span>
+  </div>
+</section>
+
+<section class="panel">
+  <div class="panel-head" style="width: 1000px;">
+    <h2>Upcoming Appointments</h2>
+    <span class="panel-sub mono">Next 5 scheduled</span>
+  </div>
+
+  <table class="data-table" *ngIf="upcoming.length; else empty">
+    <thead>
+      <tr>
+        <th>Patient</th>
+        <th>Doctor</th>
+        <th>Department</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let a of upcoming">
+        <td>{{ a.patientName }}</td>
+        <td>{{ a.doctorName }}</td>
+        <td>{{ a.department }}</td>
+        <td class="mono">{{ a.date }}</td>
+        <td class="mono">{{ a.time }}</td>
+        <td><span class="badge scheduled">{{ a.status }}</span></td>
+      </tr>
+    </tbody>
+  </table>
+  <ng-template #empty><p class="empty">No upcoming appointments.</p></ng-template>
+</section>

@@ -1,0 +1,81 @@
+<section class="form-panel">
+  <div class="form-card">
+    <h2>{{ editingId ? 'Edit Doctor' : 'Add Doctor' }}</h2>
+    <span class="form-sub">{{ editingId ? 'Update an existing doctor record' : 'Onboard a new doctor to the roster' }}</span>
+
+    <form (ngSubmit)="submit()">
+      <div class="field">
+        <label for="dname">Full name</label>
+        <input id="dname" name="dname" [(ngModel)]="form.name" placeholder="e.g. Dr. Priya Krishnan" required />
+      </div>
+
+      <div class="field">
+        <label for="spec">Specialization</label>
+        <input id="spec" name="spec" [(ngModel)]="form.specialization" placeholder="e.g. Cardiology" required />
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="dphone">Phone</label>
+          <input id="dphone" name="dphone" [(ngModel)]="form.phone" placeholder="98470 XXXXX" />
+        </div>
+        <div class="field">
+          <label for="exp">Experience (yrs)</label>
+          <input id="exp" name="exp" type="number" [(ngModel)]="form.experienceYears" min="0" style="width:150px" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="demail">Email</label>
+        <input id="demail" name="demail" [(ngModel)]="form.email" placeholder="name&#64;carehms.in" />
+      </div>
+
+      <div class="field">
+        <label for="avail">Availability</label>
+        <select id="avail" name="avail" [(ngModel)]="form.availability">
+          <option>Available</option>
+          <option>In Surgery</option>
+          <option>On Leave</option>
+        </select>
+      </div>
+
+      <button class="btn-primary" type="submit">{{ editingId ? 'Save Changes' : 'Add Doctor' }}</button>
+      <button class="btn-secondary" type="button" *ngIf="editingId" (click)="cancelEdit()">Cancel</button>
+      <div class="toast" *ngIf="saved">{{ editingId ? 'Doctor updated successfully.' : 'Doctor added successfully.' }}</div>
+    </form>
+  </div>
+
+  <div class="panel" style="margin-bottom:0;">
+    <div class="panel-head">
+      <h2>Doctor Roster</h2>
+      <span class="panel-sub mono">{{ doctors.length }} on staff</span>
+    </div>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Specialization</th>
+          <th>Experience</th>
+          <th>Contact</th>
+          <th>Availability</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let d of doctors; let i = index">
+          <td class="id-tag">{{ shortId(d._id, i) }}</td>
+          <td>{{ d.name }}</td>
+          <td>{{ d.specialization }}</td>
+          <td>{{ d.experienceYears }} yrs</td>
+          <td class="mono">{{ d.phone }}</td>
+          <td><span class="badge" [ngClass]="availClass(d.availability)">{{ d.availability }}</span></td>
+          <td class="actions-cell">
+            <button class="icon-btn" (click)="startEdit(d)" title="Edit">Edit</button>
+            <button class="icon-btn danger" (click)="remove(d)" title="Delete">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

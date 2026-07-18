@@ -1,0 +1,51 @@
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <svg class="pulse" viewBox="0 0 120 24" fill="none">
+        <path d="M0 12 H30 L36 2 L44 22 L50 12 H62 L68 4 L74 20 L80 12 H120"
+              stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="brand-text">
+        <span class="brand-name">CareHMS</span>
+        <span class="brand-sub">Hospital Operations</span>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <a routerLink="/dashboard" routerLinkActive="active" class="nav-item">
+        <span class="nav-idx">01</span> Dashboard
+      </a>
+      <a routerLink="/patients" routerLinkActive="active" class="nav-item">
+        <span class="nav-idx">02</span> Patient Registration
+      </a>
+      <a routerLink="/doctors" routerLinkActive="active" class="nav-item">
+        <span class="nav-idx">03</span> Doctor Management
+      </a>
+      <a routerLink="/appointments" routerLinkActive="active" class="nav-item">
+        <span class="nav-idx">04</span> Appointment Scheduling
+      </a>
+    </nav>
+
+    <div class="sidebar-foot">
+      <div class="admin-chip">
+        <div class="avatar">{{ initials() }}</div>
+        <div>
+          <div class="admin-name">{{ user?.name || 'Guest' }}</div>
+          <div class="admin-role">{{ user?.role || '' }}</div>
+        </div>
+      </div>
+      <button class="logout-btn" (click)="logout()">Sign out</button>
+    </div>
+  </aside>
+
+  <main class="content">
+    <header class="topbar">
+      <div>
+        <div class="eyebrow mono"></div>
+        <h1>Hospital Management System</h1>
+      </div>
+      <div class="topbar-date mono">{{ today }}</div>
+    </header>
+    <router-outlet></router-outlet>
+  </main>
+</div>

@@ -1,0 +1,91 @@
+<section class="form-panel">
+  <div class="form-card">
+    <h2>{{ editingId ? 'Edit Patient' : 'Register Patient' }}</h2>
+    <span class="form-sub">{{ editingId ? 'Update an existing patient record' : 'Add a new patient record to CareHMS' }}</span>
+
+    <form (ngSubmit)="submit()">
+      <div class="field">
+        <label for="name">Full name</label>
+        <input id="name" name="name" [(ngModel)]="form.name" placeholder="e.g. Anjali Menon" required />
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="age">Age</label>
+          <input id="age" name="age" type="number" [(ngModel)]="form.age" min="0" required />
+        </div>
+        <div class="field">
+          <label for="gender">Gender</label>
+          <select id="gender" name="gender" [(ngModel)]="form.gender">
+            <option>Female</option>
+            <option>Male</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="phone">Phone number</label>
+        <input id="phone" name="phone" [(ngModel)]="form.phone" placeholder="98470 XXXXX" required />
+      </div>
+
+      <div class="field">
+        <label for="address">Address</label>
+        <input id="address" name="address" [(ngModel)]="form.address" placeholder="City, State" />
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="blood">Blood group</label>
+          <input id="blood" name="blood" [(ngModel)]="form.bloodGroup" placeholder="O+" />
+        </div>
+        <div class="field">
+          <label for="status">Status</label>
+          <select id="status" name="status" [(ngModel)]="form.status">
+            <option>Outpatient</option>
+            <option>Admitted</option>
+            <option>Discharged</option>
+          </select>
+        </div>
+      </div>
+
+      <button class="btn-primary" type="submit">{{ editingId ? 'Save Changes' : 'Register Patient' }}</button>
+      <button class="btn-secondary" type="button" *ngIf="editingId" (click)="cancelEdit()">Cancel</button>
+      <div class="toast" *ngIf="saved">{{ editingId ? 'Patient updated successfully.' : 'Patient registered successfully.' }}</div>
+    </form>
+  </div>
+
+  <div class="panel" style="margin-bottom:0;">
+    <div class="panel-head">
+      <h2>Patient Records</h2>
+      <span class="panel-sub mono">{{ patients.length }} total</span>
+    </div>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Age / Gender</th>
+          <th>Phone</th>
+          <th>Blood Group</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let p of patients; let i = index">
+          <td class="id-tag">{{ shortId(p._id, i) }}</td>
+          <td>{{ p.name }}</td>
+          <td>{{ p.age }} · {{ p.gender }}</td>
+          <td class="mono">{{ p.phone }}</td>
+          <td>{{ p.bloodGroup || '—' }}</td>
+          <td><span class="badge" [ngClass]="statusClass(p.status)">{{ p.status }}</span></td>
+          <td class="actions-cell">
+            <button class="icon-btn" (click)="startEdit(p)" title="Edit">Edit</button>
+            <button class="icon-btn danger" (click)="remove(p)" title="Delete">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

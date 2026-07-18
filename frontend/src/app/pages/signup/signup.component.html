@@ -1,0 +1,45 @@
+<div class="auth-screen">
+  <div class="auth-panel">
+    <div class="auth-brand">
+      <svg class="pulse" viewBox="0 0 120 24" fill="none">
+        <path d="M0 12 H30 L36 2 L44 22 L50 12 H62 L68 4 L74 20 L80 12 H120"
+              stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="auth-brand-name">CareHMS</span>
+    </div>
+
+    <h1>Create your account</h1>
+    <p class="auth-sub">Set up front-desk access to CareHMS.</p>
+
+    <form (ngSubmit)="submit()">
+      <div class="field">
+        <label for="name">Full name</label>
+        <input id="name" name="name" [(ngModel)]="name" placeholder="e.g. Sanalkumar S" />
+      </div>
+      <div class="field">
+        <label for="semail">Email</label>
+        <input id="semail" name="semail" type="email" [(ngModel)]="email" placeholder="you@carehms.in" />
+      </div>
+      <div class="field">
+        <label for="spassword">Password</label>
+        <input id="spassword" name="spassword" type="password" [(ngModel)]="password" placeholder="At least 6 characters" />
+      </div>
+
+      <div class="auth-error" *ngIf="error">{{ error }}</div>
+
+      <button class="btn-primary" type="submit" [disabled]="loading">
+        {{ loading ? 'Creating account…' : 'Create Account' }}
+      </button>
+    </form>
+
+    <p class="auth-switch">Already have an account? <a routerLink="/login">Sign in</a></p>
+  </div>
+
+  <div class="auth-side">
+    <div class="side-copy">
+      <span class="eyebrow mono"></span>
+      <h2>Built for front desks<br>that move fast.</h2>
+      <p>Register patients, manage doctor availability, and schedule appointments in seconds.</p>
+    </div>
+  </div>
+</div>
