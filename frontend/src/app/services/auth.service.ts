@@ -20,7 +20,7 @@ const USER_KEY = 'carehms_user';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private base = 'https://hospital-management-system-tl11.onrender.com/api';
+  private base = 'https://hospital-management-system-tl11.onrender.com/api/auth';
 
   constructor(private http: HttpClient, private router: Router) {}
 
